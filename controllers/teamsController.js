@@ -19,9 +19,17 @@ exports.getAllTeams = async (req, res) => {
     }
   };
 
-exports.getTeamById = async (req, res) => {
-  // Get a specific team
-};
+  exports.getTeamById = async (req, res) => {
+    try {
+      const team = await Team.findById(req.params.teamId);
+      if (!team) {
+        return res.status(404).json({ msg: 'Team not found' });
+      }
+      res.json(team);
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
 
 exports.updateTeam = async (req, res) => {
   // Update a specific team
