@@ -12,9 +12,10 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex: true
 })
-.then(() => console.log('Connected to MongoDB...'))
-.catch(err => console.error('Could not connect to MongoDB...', err));
+.then(() => console.log('MongoDB Connected'))
+.catch(err => console.error('Could not connect to MongoDB:', err));
