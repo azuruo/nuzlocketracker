@@ -9,9 +9,15 @@ exports.getAllTeams = async (req, res) => {
     }
   };
 
-exports.createTeam = async (req, res) => {
-  // Create a new team
-};
+  exports.createTeam = async (req, res) => {
+    try {
+      const newTeam = new Team({ ...req.body, userId: req.userId });
+      const team = await newTeam.save();
+      res.status(201).json(team);
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
 
 exports.getTeamById = async (req, res) => {
   // Get a specific team
