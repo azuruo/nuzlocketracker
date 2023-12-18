@@ -1,8 +1,13 @@
 const Team = require('../models/Team');
 
 exports.getAllTeams = async (req, res) => {
-  // Get all teams for a user
-};
+    try {
+      const teams = await Team.find({ userId: req.userId });
+      res.json(teams);
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
 
 exports.createTeam = async (req, res) => {
   // Create a new team
