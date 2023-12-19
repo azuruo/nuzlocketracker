@@ -31,8 +31,18 @@ exports.getBoxById = async (req, res) => {
   }
 };
 
+
 exports.updateBox = async (req, res) => {
-  // Update a specific Pokémon box
+  try {
+    const box = await PokemonBox.findByIdAndUpdate(
+      req.params.boxId,
+      { $set: req.body },
+      { new: true }
+    );
+    res.json(box);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
 };
 
 exports.deleteBox = async (req, res) => {
