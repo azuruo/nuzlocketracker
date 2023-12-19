@@ -21,9 +21,9 @@ exports.getAllTeams = async (req, res) => {
 
   exports.getTeamById = async (req, res) => {
     try {
-      const team = await Team.findById(req.params.teamId);
+      const team = await Team.findOne({ _id: req.params.teamId, userId: req.userId });
       if (!team) {
-        return res.status(404).json({ msg: 'Team not found' });
+        return res.status(404).json({ msg: 'Team not found or not authorized' });
       }
       res.json(team);
     } catch (err) {
@@ -33,20 +33,28 @@ exports.getAllTeams = async (req, res) => {
 
   exports.updateTeam = async (req, res) => {
     try {
-      const team = await Team.findByIdAndUpdate(
-        req.params.teamId,
+      const team = await Team.findOneAndUpdate(
+        { _id: req.params.teamId, userId: req.userId },
         { $set: req.body },
         { new: true }
       );
+      if (!team) {
+        return res.status(404).json({ msg: 'Team not found or not authorized' });
+      }
       res.json(team);
     } catch (err) {
       res.status(500).send('Server error');
     }
   };
+  
 
   exports.deleteTeam = async (req, res) => {
     try {
-      await Team.findByIdAndRemove(req.params.teamId);
+      const team = await Team.findOne({ _id: req.params.teamId, userId: req.userId });
+      if (!team) {
+        return res.status(404).json({ msg: 'Team not found or not authorized' });
+      }
+      await team.remove();
       res.json({ msg: 'Team deleted' });
     } catch (err) {
       res.status(500).send('Server error');
