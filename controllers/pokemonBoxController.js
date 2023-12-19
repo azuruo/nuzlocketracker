@@ -21,9 +21,9 @@ exports.createBox = async (req, res) => {
 
 exports.getBoxById = async (req, res) => {
   try {
-    const box = await PokemonBox.findById(req.params.boxId);
+    const box = await PokemonBox.findOne({ _id: req.params.boxId, userId: req.userId });
     if (!box) {
-      return res.status(404).json({ msg: 'Box not found' });
+      return res.status(404).json({ msg: 'Box not found or not authorized' });
     }
     res.json(box);
   } catch (err) {
@@ -34,11 +34,14 @@ exports.getBoxById = async (req, res) => {
 
 exports.updateBox = async (req, res) => {
   try {
-    const box = await PokemonBox.findByIdAndUpdate(
-      req.params.boxId,
+    const box = await PokemonBox.findOneAndUpdate(
+      { _id: req.params.boxId, userId: req.userId },
       { $set: req.body },
       { new: true }
     );
+    if (!box) {
+      return res.status(404).json({ msg: 'Box not found or not authorized' });
+    }
     res.json(box);
   } catch (err) {
     res.status(500).send('Server error');
@@ -47,15 +50,13 @@ exports.updateBox = async (req, res) => {
 
 exports.deleteBox = async (req, res) => {
   try {
-    const box = await PokemonBox.findById(req.params.boxId);
-
+    const box = await PokemonBox.findOne({ _id: req.params.boxId, userId: req.userId });
     if (!box) {
-      return res.status(404).json({ msg: 'Box not found' });
+      return res.status(404).json({ msg: 'Box not found or not authorized' });
     }
     await box.remove();
     res.json({ msg: 'Box deleted' });
   } catch (err) {
-    console.error(err.message);
     res.status(500).send('Server error');
   }
 };
