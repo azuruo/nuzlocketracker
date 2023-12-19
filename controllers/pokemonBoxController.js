@@ -1,7 +1,12 @@
 const PokemonBox = require('../models/PokemonBox');
 
 exports.getAllBoxes = async (req, res) => {
-  // Get all Pokémon boxes for a user
+  try {
+    const boxes = await PokemonBox.find({ userId: req.userId });
+    res.json(boxes);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
 };
 
 exports.createBox = async (req, res) => {
