@@ -31,9 +31,18 @@ exports.getAllTeams = async (req, res) => {
     }
   };
 
-exports.updateTeam = async (req, res) => {
-  // Update a specific team
-};
+  exports.updateTeam = async (req, res) => {
+    try {
+      const team = await Team.findByIdAndUpdate(
+        req.params.teamId,
+        { $set: req.body },
+        { new: true }
+      );
+      res.json(team);
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
 
 exports.deleteTeam = async (req, res) => {
   // Delete a specific team
