@@ -46,5 +46,16 @@ exports.updateBox = async (req, res) => {
 };
 
 exports.deleteBox = async (req, res) => {
-  // Delete a specific Pokémon box
+  try {
+    const box = await PokemonBox.findById(req.params.boxId);
+
+    if (!box) {
+      return res.status(404).json({ msg: 'Box not found' });
+    }
+    await box.remove();
+    res.json({ msg: 'Box deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 };
