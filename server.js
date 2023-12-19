@@ -1,8 +1,8 @@
-require('dotenv').config();
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });

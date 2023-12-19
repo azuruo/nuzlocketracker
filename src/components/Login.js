@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -15,8 +18,7 @@ const Login = () => {
         try {
             const response = await axios.post('/api/users/login', { username, password });
             localStorage.setItem('token', response.data.token); 
-            // Redirect to user dashboard or home page here
-            // history.push('/user-dashboard'); // Example redirection
+            navigate('/');
         } catch (error) {
             alert('Login failed: Incorrect credentials');
         }

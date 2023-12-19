@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -30,7 +33,7 @@ const Register = () => {
                 password
             });
             localStorage.setItem('token', response.data.token);
-            // history.push('/user-dashboard'); // Example redirection
+            navigate('/');
             alert('Registration successful');
         } catch (error) {
             alert('Registration failed: ' + (error.response.data.message || 'Unknown error'));
