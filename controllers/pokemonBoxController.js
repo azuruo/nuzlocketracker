@@ -20,7 +20,15 @@ exports.createBox = async (req, res) => {
 };
 
 exports.getBoxById = async (req, res) => {
-  // Get a specific Pokémon box
+  try {
+    const box = await PokemonBox.findById(req.params.boxId);
+    if (!box) {
+      return res.status(404).json({ msg: 'Box not found' });
+    }
+    res.json(box);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
 };
 
 exports.updateBox = async (req, res) => {
