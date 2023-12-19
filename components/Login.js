@@ -5,7 +5,15 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const handleSubmit = (event) => {
-        // Handle form submission
+        event.preventDefault();
+    
+        // Basic Validation
+        if (!username || !password) {
+            alert('Please enter both username and password');
+            return;
+        }
+    
+        // API call here
     };
 
     return (

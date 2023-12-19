@@ -7,7 +7,23 @@ const Register = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     const handleSubmit = (event) => {
-        // Handle form submission
+        event.preventDefault();
+    
+        // Basic Validation
+        if (!username || !email || !password || !confirmPassword) {
+            alert('Please fill in all fields');
+            return;
+        }
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        if (!/\S+@\S+\.\S+/.test(email)) {
+            alert('Email format is invalid');
+            return;
+        }
+    
+        // API call here
     };
 
     return (
