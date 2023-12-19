@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
     
-        // Basic Validation
         if (!username || !password) {
             alert('Please enter both username and password');
             return;
         }
-    
-        // API call here
+        try {
+            const response = await axios.post('/api/users/login', { username, password });
+            localStorage.setItem('token', response.data.token); 
+            // Redirect to user dashboard or home page here
+            // history.push('/user-dashboard'); // Example redirection
+        } catch (error) {
+            alert('Login failed: Incorrect credentials');
+        }
     };
 
     return (

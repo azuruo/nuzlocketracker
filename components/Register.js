@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -6,10 +7,9 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
     
-        // Basic Validation
         if (!username || !email || !password || !confirmPassword) {
             alert('Please fill in all fields');
             return;
@@ -23,7 +23,18 @@ const Register = () => {
             return;
         }
     
-        // API call here
+        try {
+            const response = await axios.post('/api/users/register', {
+                username, 
+                email, 
+                password
+            });
+            localStorage.setItem('token', response.data.token);
+            // history.push('/user-dashboard'); // Example redirection
+            alert('Registration successful');
+        } catch (error) {
+            alert('Registration failed: ' + (error.response.data.message || 'Unknown error'));
+        }
     };
 
     return (
