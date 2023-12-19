@@ -10,7 +10,13 @@ exports.getAllBoxes = async (req, res) => {
 };
 
 exports.createBox = async (req, res) => {
-  // Create a new Pokémon box
+  try {
+    const newBox = new PokemonBox({ ...req.body, userId: req.userId });
+    const box = await newBox.save();
+    res.status(201).json(box);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
 };
 
 exports.getBoxById = async (req, res) => {
