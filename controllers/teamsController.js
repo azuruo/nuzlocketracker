@@ -44,6 +44,11 @@ exports.getAllTeams = async (req, res) => {
     }
   };
 
-exports.deleteTeam = async (req, res) => {
-  // Delete a specific team
-};
+  exports.deleteTeam = async (req, res) => {
+    try {
+      await Team.findByIdAndRemove(req.params.teamId);
+      res.json({ msg: 'Team deleted' });
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
