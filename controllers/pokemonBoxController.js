@@ -64,16 +64,27 @@ exports.deleteBox = async (req, res) => {
 exports.addPokemonToBox = async (req, res) => {
   try {
     const newPokemon = req.body;
+    // Use req.user._id as provided by the auth middleware
+    let userBox = await PokemonBox.findOne({ userId: req.user._id });
 
-    // Check if the user's box is already full (assuming a maximum limit of 30 Pokémon)
-    const userBox = await PokemonBox.findOne({ userId: req.userId });
-    if (userBox.pokemon.length >= 30) {
+    // If no box is found for the user, create a new one
+    if (!userBox) {
+      userBox = new PokemonBox({ userId: req.user._id, pokemons: [] });
+      await userBox.save(); // Make sure to save the new box
+    }
+
+    // Check if the box is full
+    if (userBox.pokemons.length >= 30) {
       return res.status(400).json({ msg: 'Box is full. Cannot add more Pokémon.' });
     }
-    userBox.pokemon.push(newPokemon);
+
+    // Add the new Pokemon to the user's box
+    userBox.pokemons.push(newPokemon);
     await userBox.save();
+
     res.status(201).json({ msg: 'Pokémon added to the box successfully', box: userBox });
   } catch (err) {
-    res.status(500).send('Server error');
+    console.error(err); // Log the error to the console
+    res.status(500).json({ error: err.message }); // Send back a detailed error message
   }
 };
