@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Droppable } from 'react-beautiful-dnd';
-import PokemonCard from './PokemonCard'; // Ensure this component accepts 'index' prop
+import PokemonCard from './PokemonCard';
 
 const Team = ({ data }) => {
   return (
