@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Team from './Team'; // Import your Team component
+import Box from './Box'; // Import your Box component
 
 const Dashboard = () => {
   const [team, setTeam] = useState(null);
@@ -42,6 +44,8 @@ const Dashboard = () => {
     <div>
       <h1>Dashboard</h1>
       {/* Render your team and box components here */}
+      <Team data={team} /> {/* Pass the team data as props to the Team component */}
+      <Box data={box} /> {/* Pass the box data as props to the Box component */}
     </div>
   );
 };
