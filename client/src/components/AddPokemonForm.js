@@ -19,6 +19,7 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
           const pokemonData = response.data.pokemon_species.map((pokemon) => {
             return {
               name: pokemon.name,
+              pokeapiId: pokemon.url.split('/')[6],
             };
           });
           setPokemonList(pokemonData);
@@ -42,15 +43,29 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
   const handleAddPokemon = async () => {
     if (selectedPokemon) {
       try {
-        // Add to Box
-        const responseBox = await axios.post('/api/addPokemonToBox', { pokemon: selectedPokemon });
+        const token = localStorage.getItem('token'); // or however you have stored it
+  
+        const config = {
+          headers: {
+            'Authorization': `Bearer ${token}` // Use the retrieved token
+          }
+        };
+  
+        // Adjust the payload to match your server's expected format
+        const responseBox = await axios.post('/api/pokemonBoxes/addPokemon', {
+          pokeapiId: selectedPokemon.pokeapiId, // You need to make sure this property exists in selectedPokemon
+          // ... include other properties if needed
+        }, config);
+  
         console.log('Added to Box:', responseBox.data);
   
         // Call the onPokemonAdd prop to add the Pokémon to the Box in the parent component
         onPokemonAdd(selectedPokemon);
       } catch (error) {
-        console.error('Failed to add Pokémon to Box:', error);
+        console.error('Failed to add Pokémon to Box:', error.response ? error.response.data : error.message);
       }
+    } else {
+      console.error('No Pokémon selected to add to the Box');
     }
   };
 
