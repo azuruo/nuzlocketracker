@@ -60,3 +60,20 @@ exports.deleteBox = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+exports.addPokemonToBox = async (req, res) => {
+  try {
+    const newPokemon = req.body;
+
+    // Check if the user's box is already full (assuming a maximum limit of 30 Pokémon)
+    const userBox = await PokemonBox.findOne({ userId: req.userId });
+    if (userBox.pokemon.length >= 30) {
+      return res.status(400).json({ msg: 'Box is full. Cannot add more Pokémon.' });
+    }
+    userBox.pokemon.push(newPokemon);
+    await userBox.save();
+    res.status(201).json({ msg: 'Pokémon added to the box successfully', box: userBox });
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+};
