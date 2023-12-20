@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 const Register = () => {
     const [username, setUsername] = useState('');
@@ -41,14 +45,46 @@ const Register = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" />
-            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
-            <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} placeholder="Confirm Password" />
-            <button type="submit">Register</button>
-        </form>
-    );
-};
-
-export default Register;
+        <Card sx={{ maxWidth: 400, mx: 'auto', mt: 5 }}>
+          <CardContent>
+            <form onSubmit={handleSubmit} noValidate autoComplete="off">
+              <TextField
+                label="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                label="Password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                label="Confirm Password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                margin="normal"
+                fullWidth
+              />
+              <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
+                Register
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+      );
+    };
+    
+    export default Register;
