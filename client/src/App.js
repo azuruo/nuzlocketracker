@@ -33,7 +33,6 @@ function App() {
               // If logged in, show log-out button
               <>
                 <Link to="/dashboard" className="App-link">Dashboard</Link>
-                <Link to="/teams" className="App-link">Teams</Link>
                 <Link to="/boxes" className="App-link">Boxes</Link>
                 <button onClick={handleLogout} className="App-link">Log Out</button>
               </>

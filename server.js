@@ -19,9 +19,6 @@ app.get('/', (req, res) => {
 // User routes
 app.use('/api/users', userRoutes);
 
-// Teams routes
-app.use('/api/teams', teamsRoutes);
-
 // Pokemon Boxes routes
 app.use('/api/pokemonBoxes', pokemonBoxesRoutes);
 
