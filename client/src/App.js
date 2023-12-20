@@ -49,9 +49,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard"element={<Dashboard />} />
-            {/* <Route path="/teams" element={<Teams />} />
-            <Route path="/boxes" element={<Boxes />} />
-            <Route path="/" element={<Home />} /> */}
+            <Route path="/" element={<Navigate to="/dashboard" />} />
+            
           </Routes>
         </header>
       </div>
