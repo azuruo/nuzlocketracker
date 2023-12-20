@@ -60,3 +60,20 @@ exports.getAllTeams = async (req, res) => {
       res.status(500).send('Server error');
     }
   };
+
+  exports.addPokemonToTeam = async (req, res) => {
+    try {
+      const newPokemon = req.body;
+  
+      // Check if the user's team is already full (assuming a maximum limit of 6 Pokémon per team)
+      const userTeam = await Team.findOne({ userId: req.userId });
+      if (userTeam.pokemons.length >= 6) {
+        return res.status(400).json({ msg: 'Team is full. Cannot add more Pokémon.' });
+      }
+      userTeam.pokemons.push(newPokemon);
+      await userTeam.save();
+      res.status(201).json({ msg: 'Pokémon added to the team successfully', team: userTeam });
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  };
