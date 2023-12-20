@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Team from './Team'; // Import your Team component
-import Box from './Box'; // Import your Box component
+import Team from './Team';
+import Box from './Box';
 
 const Dashboard = () => {
   const [team, setTeam] = useState(null);
