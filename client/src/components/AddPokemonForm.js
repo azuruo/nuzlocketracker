@@ -41,15 +41,15 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
 
   const handleAddPokemon = async () => {
     if (selectedPokemon) {
-      try {  
+      try {
         // Add to Box
         const responseBox = await axios.post('/api/addPokemonToBox', { pokemon: selectedPokemon });
         console.log('Added to Box:', responseBox.data);
-        // Add to Team
-        const responseTeam = await axios.post('/api/addPokemonToTeam', { pokemon: selectedPokemon });
-        console.log('Added to Team:', responseTeam.data);
+  
+        // Call the onPokemonAdd prop to add the Pokémon to the Box in the parent component
+        onPokemonAdd(selectedPokemon);
       } catch (error) {
-        console.error('Failed to add Pokémon:', error);
+        console.error('Failed to add Pokémon to Box:', error);
       }
     }
   };
