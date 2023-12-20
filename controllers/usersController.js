@@ -10,14 +10,19 @@ exports.register = async (req, res) => {
     if (foundUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    console.log("password", req.body.password)
-    // Hash the password
+
+    // Hash the password directly in the controller
     const salt = await bcrypt.genSalt(10);
-    const passwordDigest = await bcrypt.hash(req.body.password, salt);
-    const user = await User.create({
-      ...req.body,
-      password: passwordDigest,
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    // Create the user with the hashed password
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword,
     });
+
+    await user.save();
 
     // Create a JWT token
     const payload = {
@@ -35,20 +40,19 @@ exports.register = async (req, res) => {
     return res.status(500).send('Server error');
   }
 };
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    let user = await User.findOne({ email }).lean();
-    console.log("user", user)
-    if (!user?._id) {
+    let user = await User.findOne({ email });
+    if (!user) {
       return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
+    // Compare the password directly in the controller
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(400).json({ message: 'Invalid Credentialsz' });
+      return res.status(400).json({ message: 'Invalid Credentials' });
     }
 
     const payload = {
