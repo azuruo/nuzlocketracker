@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import { Droppable } from 'react-beautiful-dnd';
+import PokemonCard from './PokemonCard'; // Ensure this component accepts 'index' prop
 
 const Team = ({ data }) => {
   return (
@@ -12,15 +12,16 @@ const Team = ({ data }) => {
         <Typography variant="h5" component="div">
           My Team
         </Typography>
-        {data ? (
-          <List>
-            {data.map((member) => (
-              <ListItem key={member.id}>{member.name}</ListItem>
-            ))}
-          </List>
-        ) : (
-          <Typography color="text.secondary">No team data available.</Typography>
-        )}
+        <Droppable droppableId="team" direction="horizontal">
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {data.map((member, index) => (
+                <PokemonCard member={member} index={index} key={member.id} />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </CardContent>
     </Card>
   );
