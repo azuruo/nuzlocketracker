@@ -1,19 +1,28 @@
-import React from 'react';
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 const Box = ({ data }) => {
   return (
-    <div>
-      <h2>My Box</h2>
-      {data ? (
-        <ul>
-          {data.map((pokemon) => (
-            <li key={pokemon.id}>{pokemon.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No box data available.</p>
-      )}
-    </div>
+    <Card sx={{ margin: 2, backgroundColor: '#f0f0f0' }}>
+      <CardContent>
+        <Typography variant="h5" component="div">
+          My Box
+        </Typography>
+        {data ? (
+          <List>
+            {data.map((pokemon) => (
+              <ListItem key={pokemon.id}>{pokemon.name}</ListItem>
+            ))}
+          </List>
+        ) : (
+          <Typography color="text.secondary">No box data available.</Typography>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 
