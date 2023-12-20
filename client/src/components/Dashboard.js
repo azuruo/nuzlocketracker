@@ -9,7 +9,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTeamAndBox = async () => {
       try {
-        const token = localStorage.getItem('token'); // Get the JWT token from storage
+        const token = localStorage.getItem('token');
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
