@@ -48,10 +48,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route
-              path="/dashboard"
-              element={loggedIn ? <Dashboard /> : <Navigate to="/login" />}
-            />
+            <Route path="/dashboard"element={<Dashboard />} />
+            {/* <Route path="/teams" element={<Teams />} />
+            <Route path="/boxes" element={<Boxes />} />
+            <Route path="/" element={<Home />} /> */}
           </Routes>
         </header>
       </div>
