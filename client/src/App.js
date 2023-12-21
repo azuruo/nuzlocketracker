@@ -11,7 +11,7 @@ import PrivateRoute from './components/PrivateRoute';
 import pokeball from './assets/images/pokeball.png';
 // styles
 import './App.css';
-
+import ButtonAppBar from './components/ButtonAppBar';
 // views
 import Login from './components/Login';
 import Register from './components/Register';
@@ -28,8 +28,9 @@ function App() {
   return (
     <Router>
       <div className="App">
+        <ButtonAppBar />
+
         <header className="App-header">
-          {/* {isAuthenticated && <div>user: {user?._id}</div>} */}
           <img src={pokeball} className="App-logo" alt="logo" />
           <Routes>
             <Route path="/" element={<LandingPage />} />
@@ -38,7 +39,6 @@ function App() {
               element={<Login handleLogin={handleLogin} />}
             />
             <Route path="/register" element={<Register />} />
-
             <Route
               path="/dashboard"
               element={
