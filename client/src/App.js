@@ -1,6 +1,6 @@
 // hooks
 import React from 'react';
-import useUser from './hooks/useUser';
+import useAuth from './hooks/useAuth';
 
 // components
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -20,7 +20,7 @@ import LandingPage from './components/LandingPage'; // Make sure the path is cor
 
 function App() {
   const { user, isAuthenticated, handleLogout, isAuthLoaded, handleLogin } =
-    useUser();
+    useAuth();
 
   if (!isAuthLoaded) {
     return <div>Loading...</div>;
@@ -44,7 +44,7 @@ function App() {
               path="/dashboard"
               element={
                 <PrivateRoute>
-                  <Dashboard />
+                  <Dashboard handleLogout={handleLogout} />
                 </PrivateRoute>
               }
             />

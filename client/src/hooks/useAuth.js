@@ -6,7 +6,7 @@ import {
   setToken,
 } from '../services/authService';
 
-export default function useUser() {
+export default function useAuth() {
   const [user, setUser] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isAuthLoaded, setIsAuthLoaded] = useState(false);
