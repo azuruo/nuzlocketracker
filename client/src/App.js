@@ -1,20 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import LandingPage from './components/LandingPage'; // Make sure the path is correct
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
   // Check if the user is logged in when the app loads
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      setLoggedIn(true);
-    }
+    let isMounted = true; // flag to indicate the component is still mounted
+
+    const verifyToken = async () => {
+      const token = localStorage.getItem('token');
+      if (token && isMounted) {
+        try {
+          // Replace with your actual verify endpoint
+          const response = await axios.get('/api/users/verify', {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          // If the verification is successful, keep the user logged in
+          setLoggedIn(true);
+        } catch (error) {
+          // If verification fails, log the user out
+          localStorage.removeItem('token');
+          setLoggedIn(false);
+        }
+      }
+    };
+
+    verifyToken();
+
+    // Cleanup function to set the flag to false when the component unmounts
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Function to log out
@@ -28,25 +54,11 @@ function App() {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <nav>
-            {loggedIn ? (
-              // If logged in, show dashboard, and log-out button
-              <>
-                <Link to="/dashboard" className="App-link">Dashboard</Link>
-                <button onClick={handleLogout} className="App-link">Log Out</button>
-              </>
-            ) : (
-              // If not logged in, show login and register links
-              <>
-                <Link to="/login" className="App-link">Login</Link>
-                <Link to="/register" className="App-link">Register</Link>
-              </>
-            )}
-          </nav>
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login setLoggedIn={setLoggedIn} />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={loggedIn ? <Dashboard setLoggedIn={setLoggedIn} /> : <Navigate replace to="/login" />} />
           </Routes>
         </header>
       </div>
