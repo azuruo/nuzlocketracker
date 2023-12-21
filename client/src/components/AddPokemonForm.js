@@ -71,7 +71,7 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
   };
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={2} sx={{ mt: 4, mb: 4 }}>
       <Grid item xs={12} sm={6}>
         <TextField
           label="Select Pokémon Generation"
@@ -81,6 +81,17 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
           value={selectedGeneration}
           onChange={(e) => setSelectedGeneration(e.target.value)}
           disabled={loading}
+          sx={{
+            '.MuiInputLabel-root': { // Label style
+              color: 'text.primary',
+            },
+            '.MuiOutlinedInput-root': { // Input field style
+              bgcolor: 'background.paper',
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+              },
+            },
+          }}
         >
           <MenuItem value="1">Generation I</MenuItem>
           <MenuItem value="2">Generation II</MenuItem>
@@ -97,6 +108,17 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
           value={selectedPokemon ? selectedPokemon.name : ''}
           onChange={handlePokemonSelect}
           disabled={loading}
+          sx={{
+            '.MuiInputLabel-root': {
+              color: 'text.primary',
+            },
+            '.MuiOutlinedInput-root': {
+              bgcolor: 'background.paper',
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'primary.main',
+              },
+            },
+          }}
         >
           {pokemonList.map((pokemon) => (
             <MenuItem key={pokemon.name} value={pokemon.name}>
@@ -106,7 +128,24 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
         </TextField>
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="primary" onClick={handleAddPokemon} disabled={!selectedPokemon}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddPokemon}
+          disabled={!selectedPokemon}
+          sx={{
+            py: 1.5, // Padding Y
+            px: 5, // Padding X
+            bgcolor: 'primary.main',
+            '&:hover': {
+              bgcolor: 'primary.dark',
+            },
+            '&.Mui-disabled': {
+              bgcolor: 'action.disabledBackground',
+              color: 'text.disabled',
+            },
+          }}
+        >
           Add to Box
         </Button>
       </Grid>
