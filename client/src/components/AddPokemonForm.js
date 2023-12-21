@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
+import Grid from '@mui/material/Grid';
 
 const AddPokemonForm = ({ onPokemonAdd }) => {
   const [selectedGeneration, setSelectedGeneration] = useState('');
@@ -70,40 +71,46 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
   };
 
   return (
-    <form>
-      <TextField
-        label="Select Pokémon Generation"
-        select
-        variant="outlined"
-        fullWidth
-        value={selectedGeneration}
-        onChange={(e) => setSelectedGeneration(e.target.value)}
-        disabled={loading}
-      >
-        <MenuItem value="1">Generation I</MenuItem>
-        <MenuItem value="2">Generation II</MenuItem>
-        <MenuItem value="3">Generation III</MenuItem>
-        {/* Add more generations as needed */}
-      </TextField>
-      <TextField
-        label="Select Pokémon"
-        select
-        variant="outlined"
-        fullWidth
-        value={selectedPokemon ? selectedPokemon.name : ''}
-        onChange={handlePokemonSelect}
-        disabled={loading}
-      >
-        {pokemonList.map((pokemon) => (
-          <MenuItem key={pokemon.name} value={pokemon.name}>
-            {pokemon.name}
-          </MenuItem>
-        ))}
-      </TextField>
-      <Button variant="contained" color="primary" onClick={handleAddPokemon} disabled={!selectedPokemon}>
-        Add to Box
-      </Button>
-    </form>
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          label="Select Pokémon Generation"
+          select
+          variant="outlined"
+          fullWidth
+          value={selectedGeneration}
+          onChange={(e) => setSelectedGeneration(e.target.value)}
+          disabled={loading}
+        >
+          <MenuItem value="1">Generation I</MenuItem>
+          <MenuItem value="2">Generation II</MenuItem>
+          <MenuItem value="3">Generation III</MenuItem>
+          {/* Add more generations as needed */}
+        </TextField>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          label="Select Pokémon"
+          select
+          variant="outlined"
+          fullWidth
+          value={selectedPokemon ? selectedPokemon.name : ''}
+          onChange={handlePokemonSelect}
+          disabled={loading}
+        >
+          {pokemonList.map((pokemon) => (
+            <MenuItem key={pokemon.name} value={pokemon.name}>
+              {pokemon.name}
+            </MenuItem>
+          ))}
+        </TextField>
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" color="primary" onClick={handleAddPokemon} disabled={!selectedPokemon}>
+          Add to Box
+        </Button>
+      </Grid>
+    </Grid>
   );
 };
 
