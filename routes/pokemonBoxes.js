@@ -3,8 +3,8 @@ const router = express.Router();
 const pokemonBoxController = require('../controllers/pokemonBoxController');
 const authMiddleware = require('../middleware/auth');
 
-router.get('/userBoxes', authMiddleware, pokemonBoxController.getUserBoxes);
 
+router.get('/userBox', authMiddleware, pokemonBoxController.getUserBox);
 router.get('/', authMiddleware, pokemonBoxController.getAllBoxes);
 router.post('/', authMiddleware, pokemonBoxController.createBox);
 // router.get('/:boxId', authMiddleware, pokemonBoxController.getBoxById);

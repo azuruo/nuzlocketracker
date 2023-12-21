@@ -89,11 +89,16 @@ exports.addPokemonToBox = async (req, res) => {
   }
 };
 
-exports.getUserBoxes = async (req, res) => {
+exports.getUserBox = async (req, res) => {
   try {
-    const boxes = await PokemonBox.find({ userId: req.user._id });
-    res.json(boxes);
-  } catch (err) {
-    res.status(500).send('Server error');
+      const userId = req.user._id; // Assuming you have the user's ID from the auth middleware
+      const box = await PokemonBox.findOne({ userId: userId });
+
+      if (!box) {
+          return res.status(404).send('Box not found');
+      }
+      res.json(box.pokemons);
+  } catch (error) {
+      res.status(500).send('Server error');
   }
 };
