@@ -17,7 +17,11 @@ const pokemonBoxSchema = new mongoose.Schema({
         required: true,
       },
       nickname: String,
-      level: Number,
+      level: {
+        type: Number,
+        required: false,
+        default: 1,
+      },
       nature: String,
       ability: String,
       moves: [String],

@@ -4,11 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
-const PokeCard = ({ box = [] }) => {
+const PokeCard = ({ box = [], onDeleteClick }) => {
   return (
     <Grid container spacing={2}>
-      {box.map((pokemon, index) => (
+      {box.map((pokemon) => (
         <Grid item xs={12} sm={6} md={4} key={pokemon._id}>
           <Card
             sx={{
@@ -19,6 +22,16 @@ const PokeCard = ({ box = [] }) => {
               boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.1)',
             }}
           >
+            <Tooltip title="Delete Pokemon" arrow placement="top">
+              <IconButton
+                aria-label="delete"
+                sx={{ alignSelf: 'flex-end', m: 1 }}
+                onClick={() => onDeleteClick(pokemon._id)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+
             <CardMedia
               sx={{
                 height: 140,
@@ -74,7 +87,7 @@ const PokeCard = ({ box = [] }) => {
                   textAlign: 'center',
                 }}
               >
-                Level: {pokemon.level} {/* Ensure 'level' is a property */}
+                Level: {pokemon.level || 1} {/* Ensure 'level' is a property */}
               </Typography>
             </CardContent>
           </Card>

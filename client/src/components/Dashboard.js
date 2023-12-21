@@ -7,15 +7,19 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
-import PokemonBox from './PokeCard';
+import PokeCard from './PokeCard';
 import AddPokemonForm from './AddPokemonForm';
 
 // services
-import { getUserBox } from '../services/pokemonBoxesService';
+import {
+  getUserBox,
+  removePokemonFromBox,
+} from '../services/pokemonBoxesService';
 
 const Dashboard = ({ handleLogout }) => {
   // Accept setLoggedIn as a prop
   const [boxPokemons, setBoxPokemons] = useState([]);
+  const [boxId, setBoxId] = useState(null); // Added boxId state
   const [error, setError] = useState(null); // Added error state
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate(); // Added navigate hook
@@ -25,6 +29,7 @@ const Dashboard = ({ handleLogout }) => {
       try {
         const userBox = await getUserBox();
         setBoxPokemons(userBox?.pokemons);
+        setBoxId(userBox?._id);
       } catch (error) {
         console.error('Error fetching box:', error);
         setError(error.response?.data.message || 'An error occurred'); // Set error message
@@ -44,6 +49,16 @@ const Dashboard = ({ handleLogout }) => {
 
     setBoxPokemons(updatedBox.pokemons);
     // setBoxPokemons((currentBox) => [newPokemon, ...currentBox]);
+  };
+
+  const handleDeletePokemonFromBox = async (pokemonId) => {
+    try {
+      const resp = await removePokemonFromBox(boxId, pokemonId);
+      setBoxPokemons(resp.box.pokemons);
+    } catch (error) {
+      console.error('Error deleting pokemon:', error);
+      alert(error.response?.data.message || 'An error occurred');
+    }
   };
 
   const onLogoutClick = () => {
@@ -88,7 +103,7 @@ const Dashboard = ({ handleLogout }) => {
         Dashboard
       </Typography>
       <AddPokemonForm onPokemonAdd={handleAddPokemonToBox} />
-      <PokemonBox box={boxPokemons} />
+      <PokeCard box={boxPokemons} onDeleteClick={handleDeletePokemonFromBox} />
       {/* Render the PokemonBox component here */}
     </Container>
   );

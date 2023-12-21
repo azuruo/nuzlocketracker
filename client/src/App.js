@@ -19,8 +19,7 @@ import Dashboard from './components/Dashboard';
 import LandingPage from './components/LandingPage'; // Make sure the path is correct
 
 function App() {
-  const { user, isAuthenticated, handleLogout, isAuthLoaded, handleLogin } =
-    useAuth();
+  const { handleLogout, isAuthLoaded, handleLogin } = useAuth();
 
   if (!isAuthLoaded) {
     return <div>Loading...</div>;

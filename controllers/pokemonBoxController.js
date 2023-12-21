@@ -99,6 +99,43 @@ exports.addPokemonToBox = async (req, res) => {
   }
 };
 
+exports.removePokemonFromBox = async (req, res) => {
+  try {
+    const { pokemonId, boxId } = req.params;
+    const userBox = await PokemonBox.findOne({
+      _id: boxId,
+      userId: req.user._id,
+    });
+
+    // If no box is found for the user
+    if (!userBox) {
+      return res.status(404).json({ msg: 'Box not found' });
+    }
+
+    // Find the index of the pokemon to remove
+    const pokemonIndex = userBox.pokemons.findIndex(
+      (pokemon) => pokemon._id.toString() === pokemonId
+    );
+
+    // If the pokemon is not found in the box
+    if (pokemonIndex === -1) {
+      return res.status(404).json({ msg: 'Pokémon not found in the box' });
+    }
+
+    // Remove the pokemon from the box
+    userBox.pokemons.splice(pokemonIndex, 1);
+
+    // Save the updated box
+    await userBox.save();
+
+    return res
+      .status(200)
+      .json({ msg: 'Pokémon removed from the box successfully', box: userBox });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+};
 exports.getUserBox = async (req, res) => {
   try {
     const userId = req.user._id; // Assuming you have the user's ID from the auth middleware

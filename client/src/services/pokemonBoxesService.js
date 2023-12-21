@@ -15,3 +15,22 @@ export const getUserBox = async () => {
     throw error;
   }
 };
+
+export const removePokemonFromBox = async (boxId, pokemonId) => {
+  try {
+    const token = localStorage.getItem('token');
+    const config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    const response = await axios.delete(
+      `/api/pokemonBoxes/${boxId}/${pokemonId}`,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
