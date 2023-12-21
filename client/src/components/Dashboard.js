@@ -8,7 +8,8 @@ import Button from '@mui/material/Button';
 import PokemonBox from './PokeCard';
 import AddPokemonForm from './AddPokemonForm';
 
-const Dashboard = ({ setLoggedIn }) => { // Accept setLoggedIn as a prop
+const Dashboard = ({ handleLogout }) => {
+  // Accept setLoggedIn as a prop
   const [box, setBox] = useState([]);
   const [error, setError] = useState(null); // Added error state
   const [isLoading, setIsLoading] = useState(true);
@@ -42,19 +43,20 @@ const Dashboard = ({ setLoggedIn }) => { // Accept setLoggedIn as a prop
       alert('Box is full!');
       return;
     }
-    setBox(currentBox => [newPokemon, ...currentBox]);
+    setBox((currentBox) => [newPokemon, ...currentBox]);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setLoggedIn(false); // Update the loggedIn state
+  const onLogoutClick = () => {
+    handleLogout(); // Call handleLogout prop
     navigate('/'); // Navigate to home page
   };
 
   // Render loading state
   if (isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
+      <div
+        style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
+      >
         <CircularProgress />
       </div>
     );
@@ -74,7 +76,12 @@ const Dashboard = ({ setLoggedIn }) => { // Accept setLoggedIn as a prop
   // Render dashboard with Pokemon box
   return (
     <Container maxWidth="sm" sx={{ marginTop: 4 }}>
-      <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ mb: 2 }}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={onLogoutClick}
+        sx={{ mb: 2 }}
+      >
         Log Out
       </Button>
       <Typography variant="h4" component="h1" gutterBottom>
