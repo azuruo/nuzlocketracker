@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
+import { romanize } from '../utils';
 
 const AddPokemonForm = ({ onPokemonAdd }) => {
   const [selectedGeneration, setSelectedGeneration] = useState('');
@@ -111,10 +112,19 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
             },
           }}
         >
-          <MenuItem value="1">Generation I</MenuItem>
+          {/* <MenuItem value="1">Generation I</MenuItem>
           <MenuItem value="2">Generation II</MenuItem>
           <MenuItem value="3">Generation III</MenuItem>
-          {/* Add more generations as needed */}
+          <MenuItem value="4">Generation IV</MenuItem>
+          <MenuItem value="5">Generation V</MenuItem>
+          <MenuItem value="6">Generation VI</MenuItem>
+          <MenuItem value="7">Generation VII</MenuItem> */}
+
+          {new Array(7).fill(null).map((_, index) => (
+            <MenuItem key={index} value={String(index + 1)}>
+              Generation {romanize(index + 1)}
+            </MenuItem>
+          ))}
         </TextField>
       </Grid>
       <Grid item xs={12} sm={6}>
