@@ -5,6 +5,7 @@ import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
+import Boxes from './components/Boxes'; // Make sure to create this component
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -30,7 +31,7 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <nav>
             {loggedIn ? (
-              // If logged in, show log-out button
+              // If logged in, show dashboard and boxes links, and log-out button
               <>
                 <Link to="/dashboard" className="App-link">Dashboard</Link>
                 <Link to="/boxes" className="App-link">Boxes</Link>
@@ -47,9 +48,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/dashboard"element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/boxes" element={loggedIn ? <Boxes /> : <Navigate to="/login" />} />
             <Route path="/" element={<Navigate to="/dashboard" />} />
-            
           </Routes>
         </header>
       </div>
