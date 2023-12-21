@@ -1,4 +1,5 @@
 const PokemonBox = require('../models/PokemonBox');
+const { getPokeApiPokemonSprite } = require('../utils/pokeApiUtils');
 
 exports.getAllBoxes = async (req, res) => {
   try {
@@ -83,7 +84,10 @@ exports.addPokemonToBox = async (req, res) => {
     }
 
     // Add the new Pokemon to the user's box
-    userBox.pokemons.push(newPokemon);
+    userBox.pokemons.push({
+      ...newPokemon,
+      sprite: getPokeApiPokemonSprite(newPokemon.pokeapiId),
+    });
     await userBox.save();
 
     res

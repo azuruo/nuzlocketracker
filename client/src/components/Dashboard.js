@@ -36,12 +36,14 @@ const Dashboard = ({ handleLogout }) => {
     fetchBox();
   }, []);
 
-  const handleAddPokemonToBox = (newPokemon) => {
+  const handleAddPokemonToBox = (updatedBox) => {
     if (boxPokemons.length >= 30) {
       alert('Box is full!');
       return;
     }
-    setBoxPokemons((currentBox) => [newPokemon, ...currentBox]);
+
+    setBoxPokemons(updatedBox.pokemons);
+    // setBoxPokemons((currentBox) => [newPokemon, ...currentBox]);
   };
 
   const onLogoutClick = () => {
@@ -86,7 +88,7 @@ const Dashboard = ({ handleLogout }) => {
         Dashboard
       </Typography>
       <AddPokemonForm onPokemonAdd={handleAddPokemonToBox} />
-      <PokemonBox box={boxPokemons} />{' '}
+      <PokemonBox box={boxPokemons} />
       {/* Render the PokemonBox component here */}
     </Container>
   );

@@ -16,7 +16,9 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
       if (selectedGeneration) {
         setLoading(true);
         try {
-          const response = await axios.get(`https://pokeapi.co/api/v2/generation/${selectedGeneration.toLowerCase()}`);
+          const response = await axios.get(
+            `https://pokeapi.co/api/v2/generation/${selectedGeneration.toLowerCase()}`
+          );
           const pokemonData = response.data.pokemon_species.map((pokemon) => {
             return {
               name: pokemon.name,
@@ -37,7 +39,9 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
 
   const handlePokemonSelect = (event) => {
     const selectedPokemonName = event.target.value;
-    const selectedPokemonData = pokemonList.find((pokemon) => pokemon.name === selectedPokemonName);
+    const selectedPokemonData = pokemonList.find(
+      (pokemon) => pokemon.name === selectedPokemonName
+    );
     setSelectedPokemon(selectedPokemonData);
   };
 
@@ -45,28 +49,37 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
     if (selectedPokemon) {
       try {
         const token = localStorage.getItem('token'); // or however you have stored it
-  
+
         const config = {
           headers: {
-            'Authorization': `Bearer ${token}` // Use the retrieved token
-          }
+            Authorization: `Bearer ${token}`, // Use the retrieved token
+          },
         };
-  
+
         // Adjust the payload to match your server's expected format
-        const responseBox = await axios.post('/api/pokemonBoxes/addPokemon', {
-          pokeapiId: selectedPokemon.pokeapiId,
-          name: selectedPokemon.name,
-          sprite: selectedPokemon.sprite,
-          type: selectedPokemon.type,
-          // ... include other properties if needed
-        }, config);
-  
+        const responseBox = await axios.post(
+          '/api/pokemonBoxes/addPokemon',
+          {
+            pokeapiId: selectedPokemon.pokeapiId,
+            name: selectedPokemon.name,
+
+            // we're not getting these from that api endpoint right now
+            sprite: selectedPokemon.sprite,
+            type: selectedPokemon.type,
+            // ... include other properties if needed
+          },
+          config
+        );
+
         console.log('Added to Box:', responseBox.data);
-  
+
         // Call the onPokemonAdd prop to add the Pokémon to the Box in the parent component
-        onPokemonAdd(selectedPokemon);
+        onPokemonAdd(responseBox.data.box);
       } catch (error) {
-        console.error('Failed to add Pokémon to Box:', error.response ? error.response.data : error.message);
+        console.error(
+          'Failed to add Pokémon to Box:',
+          error.response ? error.response.data : error.message
+        );
       }
     } else {
       console.error('No Pokémon selected to add to the Box');
@@ -85,10 +98,12 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
           onChange={(e) => setSelectedGeneration(e.target.value)}
           disabled={loading}
           sx={{
-            '.MuiInputLabel-root': { // Label style
+            '.MuiInputLabel-root': {
+              // Label style
               color: 'text.primary',
             },
-            '.MuiOutlinedInput-root': { // Input field style
+            '.MuiOutlinedInput-root': {
+              // Input field style
               bgcolor: 'background.paper',
               '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                 borderColor: 'primary.main',
