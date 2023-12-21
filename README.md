@@ -1,70 +1,71 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# Pokemon Save Tracker
 
-In the project directory, you can run:
+Welcome to your Pokemon Save Tracker!
 
-### `npm start`
+The main purpose of this app is to be used as a companion to your own personal 'Nuzlocke' playthrough of any Pokemon game.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+All you do is select the pokemon you're using from the dropdown, and you'll be able to keep track of your encounters, losses, and upcoming bosses.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## App Screenshots
+![landingpage](/client/src/assets/images/landingpage.png)
 
-### `npm test`
+![dashboard](/client/src/assets/images/dashboard.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![userexperience](/client/src/assets/images/userexperience.png)
+## Code Snippets
 
-### `npm run build`
+AddPokemonForm - Favorite Component
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+getUserBox - Favorite Express Controller
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+PokemonBox - Main Mongoose Model
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+React Routes
+![reactroutes](/client/src/assets/images/reactroutes.png)
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Front End:
+ * React.js
+ * HTML
+ * CSS
+ * Javascript
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Back End:
+ * Node.js
+ * Express.js
+ * MongoDB
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+External Libraries:
 
-## Learn More
+* Material UI
+* Axios
+* Heroku
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+API Used:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* PokeAPI
 
-### Code Splitting
+## Authors and Acknowledgment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Anthony Tirado
+- PokeAPI
+https://pokeapi.co/
+## Icebox
+* Add ability to display current team of 6 pokemon defined by user
 
-### Analyzing the Bundle Size
+* Add functional 'box' system seen in the games
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+* Add encounter tracking
 
-### Making a Progressive Web App
+* Add nicknames
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* Display Pokemon Stats
 
-### Advanced Configuration
+* "Battle" other users with chosen pokemon
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
