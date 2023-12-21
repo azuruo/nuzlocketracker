@@ -7,8 +7,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 
 // utils
-import logo from './logo.svg';
-
+// import logo from './logo.svg';
+import pokeball from './assets/images/pokeball.png';
 // styles
 import './App.css';
 
@@ -31,7 +31,7 @@ function App() {
       <div className="App">
         <header className="App-header">
           {/* {isAuthenticated && <div>user: {user?._id}</div>} */}
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={pokeball} className="App-logo" alt="logo" />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route
