@@ -21,7 +21,7 @@ app.use('/api/userBoxes', pokemonBoxesRoutes);
 
 // middleware to serve static assets from build folder
 app.get('*', (req, res) => {
-  res.sendFile(path.join(dirname, 'client/build/index.html'));
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
 });
 
 mongoose
