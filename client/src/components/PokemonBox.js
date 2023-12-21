@@ -22,6 +22,13 @@ const PokemonBox = ({ box }) => {
                 {pokemon.name}
               </Typography>
               {/* Display additional Pokémon details here */}
+              <Typography variant="body2" color="textSecondary" component="p">
+                Type: {pokemon.type}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Level: {pokemon.level}
+              </Typography>
+              {/* Add more details as needed */}
             </CardContent>
           </Card>
         </Grid>
