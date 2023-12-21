@@ -4,13 +4,13 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/users');
 const pokemonBoxesRoutes = require('./routes/pokemonBoxes');
+const path = require('path'); // Add this line to use the path module
 
 const app = express();
 
 app.use(cors());
 
 app.use(express.json());
-
 
 // User routes
 app.use('/api/users', userRoutes);
@@ -19,9 +19,9 @@ app.use('/api/users', userRoutes);
 app.use('/api/pokemonBoxes', pokemonBoxesRoutes);
 app.use('/api/userBoxes', pokemonBoxesRoutes);
 
-// Connect to MongoDB
+// middleware to serve static assets from build folder
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+  res.sendFile(path.join(dirname, 'client/build/index.html'));
 });
 
 mongoose
@@ -37,5 +37,3 @@ mongoose
     });
   })
   .catch((err) => console.error('Could not connect to MongoDB:', err));
-
-  
