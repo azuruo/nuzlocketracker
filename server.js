@@ -21,6 +21,7 @@ app.use('/api/users', userRoutes);
 
 // Pokemon Boxes routes
 app.use('/api/pokemonBoxes', pokemonBoxesRoutes);
+app.use('/api/userBoxes', pokemonBoxesRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {
