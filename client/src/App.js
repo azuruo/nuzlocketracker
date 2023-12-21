@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import Register from './components/Register';
 import Dashboard from './components/Dashboard';
-import Boxes from './components/Boxes'; // Make sure to create this component
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,10 +30,9 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
           <nav>
             {loggedIn ? (
-              // If logged in, show dashboard and boxes links, and log-out button
+              // If logged in, show dashboard, and log-out button
               <>
                 <Link to="/dashboard" className="App-link">Dashboard</Link>
-                <Link to="/boxes" className="App-link">Boxes</Link>
                 <button onClick={handleLogout} className="App-link">Log Out</button>
               </>
             ) : (
@@ -49,8 +47,6 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/boxes" element={loggedIn ? <Boxes /> : <Navigate to="/login" />} />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
           </Routes>
         </header>
       </div>
