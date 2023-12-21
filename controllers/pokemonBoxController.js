@@ -31,7 +31,6 @@ exports.createBox = async (req, res) => {
 //   }
 // };
 
-
 exports.updateBox = async (req, res) => {
   try {
     const box = await PokemonBox.findOneAndUpdate(
@@ -50,7 +49,10 @@ exports.updateBox = async (req, res) => {
 
 exports.deleteBox = async (req, res) => {
   try {
-    const box = await PokemonBox.findOne({ _id: req.params.boxId, userId: req.userId });
+    const box = await PokemonBox.findOne({
+      _id: req.params.boxId,
+      userId: req.userId,
+    });
     if (!box) {
       return res.status(404).json({ msg: 'Box not found or not authorized' });
     }
@@ -75,14 +77,18 @@ exports.addPokemonToBox = async (req, res) => {
 
     // Check if the box is full
     if (userBox.pokemons.length >= 30) {
-      return res.status(400).json({ msg: 'Box is full. Cannot add more Pokémon.' });
+      return res
+        .status(400)
+        .json({ msg: 'Box is full. Cannot add more Pokémon.' });
     }
 
     // Add the new Pokemon to the user's box
     userBox.pokemons.push(newPokemon);
     await userBox.save();
 
-    res.status(201).json({ msg: 'Pokémon added to the box successfully', box: userBox });
+    res
+      .status(201)
+      .json({ msg: 'Pokémon added to the box successfully', box: userBox });
   } catch (err) {
     console.error(err); // Log the error to the console
     res.status(500).json({ error: err.message }); // Send back a detailed error message
@@ -91,14 +97,15 @@ exports.addPokemonToBox = async (req, res) => {
 
 exports.getUserBox = async (req, res) => {
   try {
-      const userId = req.user._id; // Assuming you have the user's ID from the auth middleware
-      const box = await PokemonBox.findOne({ userId: userId });
+    const userId = req.user._id; // Assuming you have the user's ID from the auth middleware
+    let box = await PokemonBox.findOne({ userId: userId });
 
-      if (!box) {
-          return res.status(404).send('Box not found');
-      }
-      res.json(box.pokemons);
+    if (!box) {
+      // return res.status(404).send('Box not found');
+      box = await PokemonBox.create({ userId: userId, pokemons: [] });
+    }
+    return res.status(200).json(box);
   } catch (error) {
-      res.status(500).send('Server error');
+    return res.status(500).send('Server error');
   }
 };

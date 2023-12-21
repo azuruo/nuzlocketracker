@@ -42,7 +42,7 @@ export default function useUser() {
       const { email, password } = formData;
 
       const response = await loginUser({ email, password });
-      localStorage.setItem('token', response.data.token);
+      setToken(response.token);
       onComplete();
     } catch (error) {
       throw error;

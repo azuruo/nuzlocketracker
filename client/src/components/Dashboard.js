@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// hooks
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// components
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -8,9 +10,12 @@ import Button from '@mui/material/Button';
 import PokemonBox from './PokeCard';
 import AddPokemonForm from './AddPokemonForm';
 
+// services
+import { getUserBox } from '../services/pokemonBoxesService';
+
 const Dashboard = ({ handleLogout }) => {
   // Accept setLoggedIn as a prop
-  const [box, setBox] = useState([]);
+  const [boxPokemons, setBoxPokemons] = useState([]);
   const [error, setError] = useState(null); // Added error state
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate(); // Added navigate hook
@@ -18,15 +23,8 @@ const Dashboard = ({ handleLogout }) => {
   useEffect(() => {
     const fetchBox = async () => {
       try {
-        const token = localStorage.getItem('token');
-        const config = {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        };
-
-        const response = await axios.get('/api/pokemonBoxes/userBox', config);
-        setBox(response.data);
+        const userBox = await getUserBox();
+        setBoxPokemons(userBox?.pokemons);
       } catch (error) {
         console.error('Error fetching box:', error);
         setError(error.response?.data.message || 'An error occurred'); // Set error message
@@ -39,11 +37,11 @@ const Dashboard = ({ handleLogout }) => {
   }, []);
 
   const handleAddPokemonToBox = (newPokemon) => {
-    if (box.length >= 30) {
+    if (boxPokemons.length >= 30) {
       alert('Box is full!');
       return;
     }
-    setBox((currentBox) => [newPokemon, ...currentBox]);
+    setBoxPokemons((currentBox) => [newPokemon, ...currentBox]);
   };
 
   const onLogoutClick = () => {
@@ -88,7 +86,8 @@ const Dashboard = ({ handleLogout }) => {
         Dashboard
       </Typography>
       <AddPokemonForm onPokemonAdd={handleAddPokemonToBox} />
-      <PokemonBox box={box} /> {/* Render the PokemonBox component here */}
+      <PokemonBox box={boxPokemons} />{' '}
+      {/* Render the PokemonBox component here */}
     </Container>
   );
 };
