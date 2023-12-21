@@ -54,7 +54,10 @@ const AddPokemonForm = ({ onPokemonAdd }) => {
   
         // Adjust the payload to match your server's expected format
         const responseBox = await axios.post('/api/pokemonBoxes/addPokemon', {
-          pokeapiId: selectedPokemon.pokeapiId, // You need to make sure this property exists in selectedPokemon
+          pokeapiId: selectedPokemon.pokeapiId,
+          name: selectedPokemon.name,
+          sprite: selectedPokemon.sprite,
+          type: selectedPokemon.type,
           // ... include other properties if needed
         }, config);
   
